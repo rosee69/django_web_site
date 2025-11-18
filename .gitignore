@@ -1,7 +1,6 @@
 venv_your_web_site/
 
 __pycache__/
-*.pyc
 
 db.sqlite3
 

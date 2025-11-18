@@ -6,16 +6,15 @@ def index(request):
     html = """
     <html>
         <head>
-            <title>Our Store — Products</title>
+            <title>Our Store — Orders</title>
         </head>
         <body style="font-family: Arial, sans-serif; margin: 40px;">
-            <h1>Welcome to the products of our store!</h1>
+            <h1>Order section</h1>
             <h3>
-                Here you can explore our assortment, compare items 
-                and choose what suits you best.
+                Here you can review your orders, check their status 
+                and see the history of purchases.
             </h3>
         </body>
     </html>
     """
     return HttpResponse(html)
-   
