@@ -1,0 +1,33 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Категорії | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--peach">
+    <div class="hero__text">
+        <h1>Категорії товарів</h1>
+        <p>Обирай розділ для свого улюбленця</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <ul class="card-list card-list--categories">
+        {% for category in categories %}
+            <li class="card category-card">
+                <div class="card__icon">🐾</div>
+                <div class="card__body">
+                    <h2 class="card__title">{{ category.title }}</h2>
+                    <p class="card__text">
+                        {{ category.description }}
+                    </p>
+                </div>
+            </li>
+        {% empty %}
+            <p class="empty-text">Категорій поки немає. Додай їх в адміністративній панелі.</p>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
+
+
+

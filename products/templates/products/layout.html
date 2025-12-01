@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Peachy love{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'products/css/style.css' %}">
+    <script defer src="{% static 'products/js/main.js' %}"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="logo-block">
+                <div class="logo-icon">🐾</div>
+                <div class="logo-texts">
+                    <div class="logo-main">Peachy love</div>
+                    <div class="logo-sub">затишний зоомагазин</div>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="{% url 'products:category_list' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'category_list' or request.resolver_match.url_name == 'product_index' %}nav-link--active{% endif %}">
+                    Категорії
+                </a>
+                <a href="{% url 'products:products_list' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'products_list' %}nav-link--active{% endif %}">
+                    Товари
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <span class="footer-heart">З любовʼю до тваринок 🐱</span>
+        </div>
+    </footer>
+</body>
+</html>
+
+

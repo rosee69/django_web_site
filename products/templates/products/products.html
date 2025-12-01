@@ -1,0 +1,48 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Товари | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--mint">
+    <div class="hero__text">
+        <h1>Товари для улюбленців</h1>
+        <p>Преміальні корми, іграшки та турбота – все в одному місці!</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="card-list card-list--products">
+        {% for product in products %}
+            <article class="card product-card">
+                <div class="product-card__media">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}"
+                             alt="{{ product.name }}"
+                             class="product-card__image">
+                    {% else %}
+                    {% endif %}
+                </div>
+
+                <div class="product-card__body">
+                    <h2 class="card__title">{{ product.name }}</h2>
+
+                    <div class="product-card__meta">
+                        <span class="product-price">{{ product.price }} ₴</span>
+                        <span class="product-country">{{ product.country }}</span>
+                    </div>
+
+                    <p class="card__text">{{ product.description }}</p>
+
+                    <span class="product-category-pill">
+                        {{ product.category.title }}
+                    </span>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty-text">
+                Товарів поки немає. Додай їх в адміністративній панелі.
+            </p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
