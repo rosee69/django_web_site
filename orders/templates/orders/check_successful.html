@@ -1,0 +1,12 @@
+{% extends "products/layout.html" %}
+
+{% block content %}
+<section class="content-section">
+    <h1>🎉 Дякуємо за замовлення!</h1>
+    <p>Ваше замовлення успішно оформлено 💖</p>
+
+    <a href="{% url 'products:products_list' %}" class="btn-primary">
+        Повернутися до товарів
+    </a>
+</section>
+{% endblock %}

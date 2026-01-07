@@ -1,0 +1,58 @@
+{% extends "products/layout.html" %}
+
+{% block title %}{{ product.title }} | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--mint">
+    <div class="hero__text">
+        <h1>{{ product.title }}</h1>
+        <p>{{ product.category.title }} • {{ product.price }} ₴ • {{ product.country }}</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <article class="card product-card">
+        <div class="product-card__media">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-card__image">
+            {% endif %}
+        </div>
+
+        <div class="product-card__body">
+            <h2 class="card__title">{{ product.title }}</h2>
+
+            <div class="product-card__meta">
+                <span class="product-price">{{ product.price }} ₴</span>
+                <span class="product-country">{{ product.country }}</span>
+            </div>
+
+            <p class="card__text">{{ product.description }}</p>
+
+            <span class="product-category-pill">
+                {{ product.category.title }}
+            </span>
+
+            <div class="card-actions" style="margin-top: 10px;">
+                <form action="{% url 'orders:add_to_cart' product.id %}" method="post">
+                     {% csrf_token %}
+                <button type="submit" class="btn-primary">
+                               🛒 У кошик
+                 </button>
+                </form>
+
+                <a href="{% url 'products:product_update' product.slug %}" class="btn-secondary">
+                    Редагувати
+                </a>
+                <a href="{% url 'products:product_delete' product.slug %}" class="btn-danger">
+                    Видалити
+                </a>
+                <a href="{% url 'products:products_list' %}" class="btn-secondary">
+                    До списку товарів
+                </a>
+               
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}
+

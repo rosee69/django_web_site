@@ -2,44 +2,91 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Peachy love{% endblock %}</title>
+    <meta charset="utf-8">
+    <title>{% block title %}Peachy Love{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'products/css/style.css' %}">
-    <script defer src="{% static 'products/js/main.js' %}"></script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="site-header__inner">
-            <div class="logo-block">
-                <div class="logo-icon">🐾</div>
-                <div class="logo-texts">
-                    <div class="logo-main">Peachy love</div>
-                    <div class="logo-sub">затишний зоомагазин</div>
-                </div>
+
+<header class="site-header">
+    <div class="site-header__inner">
+
+        <!-- ЛОГО -->
+        <a href="{% url 'products:category_list' %}" class="logo-block">
+            <div class="logo-icon">🐾</div>
+            <div class="logo-texts">
+                <span class="logo-main">Peachy Love</span>
+                <span class="logo-sub">затишний зоомагазин</span>
             </div>
+        </a>
 
-            <nav class="main-nav">
-                <a href="{% url 'products:category_list' %}"
-                   class="nav-link {% if request.resolver_match.url_name == 'category_list' or request.resolver_match.url_name == 'product_index' %}nav-link--active{% endif %}">
-                    Категорії
+        <!-- НАВИГАЦИЯ -->
+        <nav class="main-nav">
+
+            <a href="{% url 'products:category_list' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'category_list' %}nav-link--active{% endif %}">
+                Категорії
+            </a>
+
+            <a href="{% url 'products:products_list' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'products_list' %}nav-link--active{% endif %}">
+                Товари
+            </a>
+
+            <a href="{% url 'orders:cart_detail' %}"
+               class="nav-link {% if request.resolver_match.namespace == 'orders' %}nav-link--active{% endif %}">
+                🛒 Кошик
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'accounts:profile' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'profile' %}nav-link--active{% endif %}">
+                    Профіль
                 </a>
-                <a href="{% url 'products:products_list' %}"
-                   class="nav-link {% if request.resolver_match.url_name == 'products_list' %}nav-link--active{% endif %}">
-                    Товари
+
+                {% if user.is_staff %}
+                    <a href="/admin/" class="nav-link nav-link--admin">
+                        ⚙️ Адмінка
+                    </a>
+                {% endif %}
+
+                <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link btn-link">
+                        Вихід
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'accounts:login' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'login' %}nav-link--active{% endif %}">
+                    Вхід
                 </a>
-            </nav>
-        </div>
-    </header>
 
-    <main class="page">
-        {% block content %}{% endblock %}
-    </main>
+                <a href="{% url 'accounts:register' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'register' %}nav-link--active{% endif %}">
+                    Реєстрація
+                </a>
 
-    <footer class="site-footer">
-        <div class="site-footer__inner">
-            <span class="footer-heart">З любовʼю до тваринок 🐱</span>
-        </div>
-    </footer>
+            {% endif %}
+
+        </nav>
+    </div>
+</header>
+
+<main class="page">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <span>© Peachy Love</span>
+        <span class="footer-heart">З любов'ю до тваринок 🐱</span>
+    </div>
+</footer>
+
 </body>
 </html>
 

@@ -1,0 +1,15 @@
+{% extends "products/layout.html" %}
+
+
+{% block title %}Вхід | Peachy Love{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <h2>Вхід</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Увійти</button>
+    </form>
+</section>
+{% endblock %}

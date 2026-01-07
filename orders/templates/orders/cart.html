@@ -1,0 +1,45 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Кошик | Peachy Love{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <h1>🛒 Мій кошик</h1>
+
+    {% if order and order.items.all %}
+        <div class="card-list card-list--products">
+            {% for item in order.items.all %}
+                <article class="card product-card">
+                    <div class="product-card__media">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" class="product-card__image">
+                        {% endif %}
+                    </div>
+
+                    <div class="product-card__body">
+                        <h2>{{ item.product.name }}</h2>
+
+                        <p>{{ item.product.price }} ₴ × {{ item.quantity }}</p>
+                        <strong>{{ item.total_price }} ₴</strong>
+
+                        <div class="card-actions">
+                            <a href="{% url 'orders:decrease' item.id %}" class="btn-secondary">−</a>
+                            <a href="{% url 'orders:increase' item.id %}" class="btn-secondary">+</a>
+                            <a href="{% url 'orders:remove' item.id %}" class="btn-danger">✖</a>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        <h2 style="margin-top:20px;">Разом: {{ order.total_price }} ₴</h2>
+
+        <a href="{% url 'orders:checkout' %}" class="btn-primary">
+            ✅ Оформити замовлення
+        </a>
+
+    {% else %}
+        <p>Кошик порожній 🐱</p>
+    {% endif %}
+</section>
+{% endblock %}

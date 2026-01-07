@@ -1,0 +1,23 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Видалення товару | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--mint">
+    <div class="hero__text">
+        <h1>Видалення товару</h1>
+        <p>Товар: <strong>{{ object.name }}</strong></p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="card">
+        <p>Ви дійсно хочете видалити товар <strong>"{{ object.name }}"</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Так, видалити</button>
+            <a href="{% url 'products:products_list' %}" class="btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

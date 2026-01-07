@@ -1,0 +1,63 @@
+{% extends "products/layout.html" %}
+
+{% block title %}
+    {% if object %}Редагування товару {{ object.name }} | Peachy love{% else %}Новий товар | Peachy love{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="hero hero--mint">
+    <div class="hero__text">
+        <h1>
+            {% if object %}Редагувати товар{% else %}Додати товар{% endif %}
+        </h1>
+        <p>Додай щось смачненьке чи корисне для улюбленця 💚</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-row">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div class="form-row">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div class="form-row">
+            {{ form.price.label_tag }}
+            {{ form.price }}
+            {{ form.price.errors }}
+        </div>
+
+        <div class="form-row">
+            {{ form.country.label_tag }}
+            {{ form.country }}
+            {{ form.country.errors }}
+        </div>
+
+        <div class="form-row">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+            {{ form.category.errors }}
+        </div>
+
+        <div class="form-row">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {{ form.image.errors }}
+        </div>
+
+        <button type="submit" class="btn-primary">
+            {% if object %}Зберегти зміни{% else %}Створити товар{% endif %}
+        </button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "products/layout.html" %}
+
+
+{% block title %}Реєстрація | Peachy Love{% endblock %}
+
+{% block content %}
+
+<section class="hero hero--peach">
+    <div class="hero__text">
+        <h1>Реєстрація</h1>
+        <p>Створення акаунта</p>
+    </div>
+</section>
+
+<section class="content-section auth-section">
+    <form method="post" class="form auth-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-row">
+            <label class="form-label" for="{{ form.username.id_for_label }}">
+                {{ form.username.label }}
+            </label>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="{{ form.email.id_for_label }}">
+                {{ form.email.label }}
+            </label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="{{ form.password1.id_for_label }}">
+                {{ form.password1.label }}
+            </label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="{{ form.password2.id_for_label }}">
+                {{ form.password2.label }}
+            </label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+
+        <div class="form-footer">
+            <button type="submit" class="btn-primary">
+                Зареєструватися
+            </button>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

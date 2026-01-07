@@ -1,0 +1,76 @@
+{% extends "products/layout.html" %}
+
+{% block title %}{{ category.title }} | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--peach">
+    <div class="hero__text">
+        <h1>{{ category.title }}</h1>
+        <p>{{ category.description }}</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <h2 style="margin-bottom: 12px;">Товари у цій категорії</h2>
+
+    {% if products %}
+        <div class="card-list card-list--products">
+            {% for product in products %}
+                <article class="card product-card">
+                    <div class="product-card__media">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}"
+                                 alt="{{ product.name }}"
+                                 class="product-card__image">
+                        {% endif %}
+                    </div>
+
+                    <div class="product-card__body">
+                        <h2 class="card__title">{{ product.name }}</h2>
+
+                        <div class="product-card__meta">
+                            <span class="product-price">{{ product.price }} ₴</span>
+                            <span class="product-country">{{ product.country }}</span>
+                        </div>
+
+                        <p class="card__text">{{ product.description }}</p>
+
+                        <span class="product-category-pill">
+                            {{ product.category.title }}
+                        </span>
+
+                        <!-- КНОПКИ -->
+                        <div class="card-actions">
+
+                            <!-- 🛒 ДОДАТИ В КОШИК -->
+                            <form action="{% url 'orders:add_to_cart' product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-primary">
+                                    🛒 Додати в кошик
+                                </button>
+                            </form>
+
+                            <!-- 🔍 ДЕТАЛІ -->
+                            {% if product.slug %}
+                                <a href="{% url 'products:product_detail' product.slug %}"
+                                   class="btn-secondary">
+                                    Детальніше
+                                </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-text">У цій категорії поки немає товарів.</p>
+    {% endif %}
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'products:category_list' %}" class="btn-secondary">
+            ← Повернутися до всіх категорій
+        </a>
+    </div>
+</section>
+{% endblock %}

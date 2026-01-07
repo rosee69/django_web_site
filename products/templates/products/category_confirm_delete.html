@@ -1,0 +1,23 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Видалення категорії | Peachy love{% endblock %}
+
+{% block content %}
+<section class="hero hero--peach">
+    <div class="hero__text">
+        <h1>Видалення категорії</h1>
+        <p>Категорія: <strong>{{ object.title }}</strong></p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="card">
+        <p>Ви дійсно хочете видалити категорію <strong>"{{ object.title }}"</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Так, видалити</button>
+            <a href="{% url 'products:category_list' %}" class="btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -11,21 +11,77 @@
 </section>
 
 <section class="content-section">
+    <section class="content-section">
+    <div class="top-actions">
+        <a href="{% url 'products:category_create' %}" class="btn-primary">
+            + Додати категорію
+        </a>
+    </div>
+
     <ul class="card-list card-list--categories">
         {% for category in categories %}
             <li class="card category-card">
                 <div class="card__icon">🐾</div>
                 <div class="card__body">
-                    <h2 class="card__title">{{ category.title }}</h2>
+                    <h2 class="card__title">
+                        <a href="{% url 'products:category_detail' category.slug %}">
+                             {{ category.title }}
+                        </a>
+                    </h2>
+
                     <p class="card__text">
                         {{ category.description }}
                     </p>
-                </div>
+
+                   <div class="card-actions">
+                       <a href="{% url 'products:category_detail' category.slug %}" class="btn-secondary">
+                            Детальніше
+                       </a>
+                       <a href="{% url 'products:category_update' category.slug %}" class="btn-secondary">
+                            Редагувати
+                       </a>
+                       <a href="{% url 'products:category_delete' category.slug %}" class="btn-danger">
+                            Видалити
+                       </a>
+                   </div>
+               </div>
             </li>
-        {% empty %}
-            <p class="empty-text">Категорій поки немає. Додай їх в адміністративній панелі.</p>
         {% endfor %}
     </ul>
+        {% if is_paginated %}
+        <nav class="pagination">
+            <ul class="pagination__list">
+                {% if page_obj.has_previous %}
+                    <li class="pagination__item">
+                        <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link">
+                            ‹ Назад
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <li class="pagination__item pagination__item--active">
+                            <span class="pagination__link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="pagination__item">
+                            <a href="?page={{ num }}" class="pagination__link">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="pagination__item">
+                        <a href="?page={{ page_obj.next_page_number }}" class="pagination__link">
+                            Вперед ›
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
 </section>
 {% endblock %}
 

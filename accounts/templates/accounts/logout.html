@@ -1,0 +1,11 @@
+{% extends "products/layout.html" %}
+
+
+{% block title %}Вихід | Peachy Love{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <h2>Ви вийшли з акаунта</h2>
+    <a href="{% url 'login' %}">Увійти знову</a>
+</section>
+{% endblock %}

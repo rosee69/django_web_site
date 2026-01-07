@@ -1,0 +1,53 @@
+{% extends "products/layout.html" %}
+
+
+{% block content %}
+<section class="content-section profile-page">
+    <h2 class="section-title">Профіль {{ user.username }}</h2>
+
+    <div class="profile-card">
+        <div class="profile-avatar-wrap">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="profile-avatar">
+            {% else %}
+                <div class="profile-avatar profile-avatar-placeholder">🐱</div>
+            {% endif %}
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+
+            <h3 class="profile-subtitle">Дані акаунта</h3>
+
+            <div class="form-row">
+                {{ u_form.username.label_tag }}
+                {{ u_form.username }}
+            </div>
+
+            <div class="form-row">
+                {{ u_form.email.label_tag }}
+                {{ u_form.email }}
+            </div>
+
+            <h3 class="profile-subtitle">Профіль</h3>
+
+            <div class="form-row">
+                {{ p_form.bio.label_tag }}
+                {{ p_form.bio }}
+            </div>
+
+            <div class="form-row">
+                {{ p_form.avatar.label_tag }}
+                {{ p_form.avatar }}
+            </div>
+
+            <div class="form-row">
+                {{ p_form.birth_date.label_tag }}
+                {{ p_form.birth_date }}
+            </div>
+
+            <button type="submit" class="btn-primary">Оновити профіль</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

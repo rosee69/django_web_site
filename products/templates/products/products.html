@@ -1,8 +1,9 @@
 {% extends "products/layout.html" %}
 
-{% block title %}Товари | Peachy love{% endblock %}
+{% block title %}Товари | Peachy Love{% endblock %}
 
 {% block content %}
+
 <section class="hero hero--mint">
     <div class="hero__text">
         <h1>Товари для улюбленців</h1>
@@ -11,19 +12,31 @@
 </section>
 
 <section class="content-section">
+
+    {% if user.is_staff %}
+        <div class="top-actions">
+            <a href="{% url 'products:product_create' %}" class="btn-primary">
+                + Додати товар
+            </a>
+
+        
+    {% endif %}
+
     <div class="card-list card-list--products">
+
         {% for product in products %}
             <article class="card product-card">
+
                 <div class="product-card__media">
                     {% if product.image %}
                         <img src="{{ product.image.url }}"
                              alt="{{ product.name }}"
                              class="product-card__image">
-                    {% else %}
                     {% endif %}
                 </div>
 
                 <div class="product-card__body">
+
                     <h2 class="card__title">{{ product.name }}</h2>
 
                     <div class="product-card__meta">
@@ -31,18 +44,87 @@
                         <span class="product-country">{{ product.country }}</span>
                     </div>
 
-                    <p class="card__text">{{ product.description }}</p>
+                    <p class="card__text">
+                        {{ product.description|truncatechars:120 }}
+                    </p>
 
                     <span class="product-category-pill">
                         {{ product.category.title }}
                     </span>
+
+                    <div class="card-actions">
+
+                        <form action="{% url 'orders:add_to_cart' product.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-primary">
+                                🛒 Додати в кошик
+                            </button>
+                        </form>
+
+                        <a href="{% url 'products:product_detail' product.slug %}"
+                           class="btn-secondary">
+                            Детальніше
+                        </a>
+
+                        <!-- 🛠 АДМИН (СКРЫТО ПО УМОЛЧАНИЮ) -->
+                        {% if user.is_staff %}
+                            <div class="admin-actions hidden">
+                                <a href="{% url 'products:product_update' product.slug %}"
+                                   class="btn-secondary">
+                                    Редагувати
+                                </a>
+
+                                <a href="{% url 'products:product_delete' product.slug %}"
+                                   class="btn-danger">
+                                    Видалити
+                                </a>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
                 </div>
             </article>
-        {% empty %}
-            <p class="empty-text">
-                Товарів поки немає. Додай їх в адміністративній панелі.
-            </p>
         {% endfor %}
+
     </div>
+
+    {% if is_paginated %}
+        <nav class="pagination">
+            <ul class="pagination__list">
+
+                {% if page_obj.has_previous %}
+                    <li class="pagination__item">
+                        <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link">
+                            ‹ Назад
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <li class="pagination__item pagination__item--active">
+                            <span class="pagination__link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="pagination__item">
+                            <a href="?page={{ num }}" class="pagination__link">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="pagination__item">
+                        <a href="?page={{ page_obj.next_page_number }}" class="pagination__link">
+                            Вперед ›
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+
 </section>
+
 {% endblock %}
