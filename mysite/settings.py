@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 import os
    
-  if DEBUG:
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
