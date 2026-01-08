@@ -27,12 +27,13 @@ load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://django-web-site.onrender.com",
+    "https://*.onrender.com"
 ]
 
 # Application definition
