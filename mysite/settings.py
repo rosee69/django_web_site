@@ -32,7 +32,7 @@ DEBUG = os.getenv("DEBUG") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 CSRF_TRUSTED_ORIGINS = [
-    https://djangowebsite-production-3db5.up.railway.app/
+    "https://djangowebsite-production-3db5.up.railway.app/",
 ]
 
 # Application definition
